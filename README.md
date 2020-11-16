@@ -3,10 +3,12 @@ WavPatcher 0.9.2b
 
 <p><img src="https://github.com/ckbaudio/wavpatcher/blob/main/img/wpscreenie.png" alt="wpscreenie.png" width="50%" height="50%" /><img src="https://github.com/ckbaudio/wavpatcher/blob/main/img/wpscreenie2.png" alt="wpscreenie2.png" width="50%" height="50%" /></p>
 
-The purpose of WavPatcher is to replace a WAV\_EXTENSIBLE header subchunk sometimes found in WAV files that breaks compatibility on some equipment. This tool does not re-encode audio files but overwrites a 2-byte integer found in the header to invoke standard PCM. As such, this tool will not make non-standard multi-channel files (with more than 2 channels) compatible. 
+The purpose of WavPatcher is to replace a WAV\_EXTENSIBLE header subchunk sometimes found in WAV files that breaks compatibility on some equipment. This tool does not re-encode audio files but overwrites a 2-byte integer found in the header to invoke standard PCM. As such, this tool will not make non-standard multi-channel files (with more than 2 channels) compatible if your audio system does not already support it. 
 
 ### Downloads
 The latest binaries can be found **[here](https://github.com/ckbaudio/wavpatcher/releases)**.
+
+-----------------
 
 > #### _What is WAV\_EXTENSIBLE?_
 > 
@@ -15,7 +17,11 @@ The latest binaries can be found **[here](https://github.com/ckbaudio/wavpatcher
 
 ### The Problem
 
-While most audio systems have maintained wav parsers, some systems will still not parse an WAV\_EXT implementation if the systems capabilities will never support multi-channel output or extremely high bit rates. However, some services and software write WAV\_EXT to create a WAV file from raw PCM or generated audio if the audio uses an above CD-quality standard. While this is technically best practice, it isn't totally necessary for stereo files in most cases as traditional fmt code can still work with standard stereo types at higher-than-CD-quality. As such, these generic WAV files that use the ext flag can become unsupported by standalone media equipment even if the quality attributes of the file are compatible on the audio system in question.
+While most audio systems have maintained wav parsers, some systems will still not parse an WAV\_EXT implementation if the systems capabilities will never support multi-channel output or extremely high bit rates. However, some services and software write WAV\_EXT to generate a WAV file from raw PCM or rendered audio if the file uses an above CD-quality standard. While this is technically best practice, it isn't totally necessary for stereo files in most cases as traditional fmt code can still work with standard stereo types at higher-than-CD-quality. As such, these generic WAV files that use the ext flag can become unsupported by standalone media equipment even if the quality attributes of the file are otherwise compatible on the audio system in question.
+
+### Why Use WavPatcher?
+
+There isn't any easy or automated way to know whether wav_ext flags are present without a verbose metadata reader, if it even includes this info at all. Compounding this, large libraries of wav files make it laborsome to manually look for this problem. This tool doesn't do any form of encoding and only touches files that exhibit the EXT header flag. It also requires less horsepower and is faster than batch transcoding. This is particularly useful for DJ's as patching libraries shouldn't break files and nor mean having to re-import/re-analyse problematic files manually.
 
 ### What WavPatcher Can't Do
 
@@ -39,6 +45,11 @@ WavPatcher is written in Python 3, and builds are supported on MacOS and Windows
 > Tested on:  
 Mac OSX Sierra 10.12.6, Big Sur 11.0.1  
 Windows 10 1809
+
+### Known Issues
++ GUI sometimes has unpredictable update behavior on some MacOS systems.
+
++ Checking/patching may not fully close the file on interrupts if a user prematurely exits the application during checking/reading. This behaviour is unconfirmed but it's best to complete checking process before closing anyway, especially on external drives.
 
 ### About
 
