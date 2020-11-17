@@ -42,6 +42,9 @@ For **MacOS**, open Terminal and CD into the wavpatcher-main directory and run: 
 ### Support
 WavPatcher is written in Python 3, and builds are supported on MacOS and Windows.
 
+#### For Windows
+Since the binaries for Windows use pyinstaller, it's common for Windows Defender and AVG to generate a false-positive. It may be necessary to [add an exception to Windows Defender](https://support.microsoft.com/en-us/windows/add-an-exclusion-to-windows-security-811816c0-4dfd-af4a-47e4-c301afe13b26).
+
 > Tested on:  
 Mac OSX Sierra 10.12.6, Big Sur 11.0.1  
 Windows 10 1809
